@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bmuoucv7sivw7"]
+
+[ext_resource type="Script" uid="uid://l41xi833ijss" path="res://scripts/Kat.gd" id="1_kpgfd"]
+[ext_resource type="Texture2D" uid="uid://bl5j8k0rdmnfq" path="res://assets/kat.png" id="2_jfdve"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xewbd"]
+size = Vector2(77, 58)
+
+[node name="Node2D" type="CharacterBody2D" unique_id=1147615748]
+floor_constant_speed = true
+script = ExtResource("1_kpgfd")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1091892621]
+texture_filter = 1
+scale = Vector2(0.375, 0.375)
+texture = ExtResource("2_jfdve")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1049358905]
+position = Vector2(-2.5, 19)
+shape = SubResource("RectangleShape2D_xewbd")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=478494351]
+position_smoothing_enabled = true
+
+[node name="Area2D" type="Area2D" parent="." unique_id=245320954]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=254745141]
+position = Vector2(-2.5, 19)
+shape = SubResource("RectangleShape2D_xewbd")
