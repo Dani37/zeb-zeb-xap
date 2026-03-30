@@ -18,9 +18,10 @@ func _physics_process(delta: float) -> void:
 	else:
 		$Sprite2D.scale.x = move_toward($Sprite2D.scale.x, 0.375, 0.02)
 		$Sprite2D.scale.y = move_toward($Sprite2D.scale.y, 0.375, 0.02)
+	
 	# Add the gravity.
 	if not is_on_floor():
-		velocity += get_gravity() * (delta - 0.005)
+		velocity += get_gravity() * delta * 0.7
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		timer = get_tree().create_timer(0.2)
@@ -31,6 +32,7 @@ func _physics_process(delta: float) -> void:
 		slow_jump()
 		if timer:
 			timer.time_left = 0
+			
 	if Input.is_action_pressed("ui_shift"):
 		SPEED = 75
 		SPEED_LIMIT = 450
@@ -41,11 +43,12 @@ func _physics_process(delta: float) -> void:
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("ui_left", "ui_right")
 	if direction == -1 and velocity.x >= SPEED_LIMIT*-1:
-		velocity.x += direction * SPEED
+		velocity.x += direction * SPEED * delta * 60 # 60 because target framerate is 60. if you want to make your target framerate 30, then make it 30
 	elif direction == 1 and velocity.x <= SPEED_LIMIT:
-		velocity.x += direction * SPEED
+		velocity.x += direction * SPEED * delta * 60
 	else:
 		velocity.x = move_toward(velocity.x, 0, 160)
+		
 	if velocity.x < 0:
 		$Sprite2D.flip_h = true
 	elif velocity.x > 0:
