@@ -5,13 +5,11 @@ var SPEED = 50
 var SPEED_LIMIT = 300
 const JUMP_VELOCITY = -400.0
 var timer
-@onready var sprite_scale = $Sprite2D.scale.y
 
 func _ready() -> void:
 	Engine.physics_ticks_per_second = 120
 	timer = get_tree().create_timer(0.2)
 func _physics_process(delta: float) -> void:
-	sprite_scale = $Sprite2D.scale.y
 	if not $RayCast2D.is_colliding() and velocity.y > 10:
 		$Sprite2D.scale.y = move_toward($Sprite2D.scale.y, 0.5, 0.001)
 		$Sprite2D.scale.x = move_toward($Sprite2D.scale.x, 0.1, 0.001)
@@ -42,16 +40,14 @@ func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("ui_left", "ui_right")
-	if direction == -1 and velocity.x >= SPEED_LIMIT*-1:
-		velocity.x += direction * SPEED * delta * 60 # 60 because target framerate is 60. if you want to make your target framerate 30, then make it 30
-	elif direction == 1 and velocity.x <= SPEED_LIMIT:
-		velocity.x += direction * SPEED * delta * 60
+	if direction and velocity.x >= SPEED_LIMIT*-1 or velocity.x <= SPEED_LIMIT:
+		position.x += direction * SPEED * delta * 60 # 60 because target framerate is 60. if you want to make your target framerate 30, then make it 30
 	else:
 		velocity.x = move_toward(velocity.x, 0, 160)
 		
-	if velocity.x < 0:
+	if direction == -1:
 		$Sprite2D.flip_h = true
-	elif velocity.x > 0:
+	elif direction == 1:
 		$Sprite2D.flip_h = false
 
 	move_and_slide()
