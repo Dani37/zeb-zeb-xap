@@ -32,11 +32,11 @@ func _physics_process(delta: float) -> void:
 			timer.time_left = 0
 			
 	if Input.is_action_pressed("ui_shift"):
-		SPEED = 75
-		SPEED_LIMIT = 450
+		SPEED = 7
+		SPEED_LIMIT = 100
 	else:
-		SPEED = 50
-		SPEED_LIMIT = 300
+		SPEED = 5
+		SPEED_LIMIT = 50
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("ui_left", "ui_right")
